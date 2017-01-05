@@ -3,5 +3,14 @@
 *.db
 .DS_Store
 .coverage
-local_settings.py
+#local_settings.py
 /static
+.idea/workspace.xml
+mezzanine_docker/__pycache__/
+myapp/__pycache__/
+myapp/migrations/__pycache__/
+mykgb/__pycache__/
+mykgb/mykgb/__pycache__/
+mykgb/mykgb/spiders/__pycache__/
+mykgb/spiders/__pycache__/
+ta-lib/src/tools/gen_code/.libs/
