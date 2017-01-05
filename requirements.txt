@@ -1,0 +1,9 @@
+Mezzanine==4.2.2
+psycopg2
+django-tinymce
+django_pandas
+numpy
+quandl
+psycopg2
+scrapy
+Cython
