@@ -8,6 +8,6 @@
      volumes:
        - .:/code
      ports:
-       - "8888:8000"
+       - "8866:8000"
      depends_on:
        - db
