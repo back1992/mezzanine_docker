@@ -57,7 +57,7 @@ class WholeTradersSpider(scrapy.Spider):
         df_signal_sell = df_signal[df_signal['var'] < 0][df_signal['interest'] < 0][
             df_signal['volume_var'] > 0].sort_values(by=['var'], ascending=[1])
         print(self.send_signal_buy(df_signal_buy))
-        self.send_signal_sell(df_signal_sell)
+        print(self.send_signal_sell(df_signal_sell))
         # sm(u"new 今日做多合约品种 " + date.strftime('%Y-%m-%d'), self.send_signal_buy(df_signal_buy))
         # sm(u"new 今日做空合约品种 " + date.strftime('%Y-%m-%d'), self.send_signal_sell(df_signal_sell))
         sm("23 ", '123')
