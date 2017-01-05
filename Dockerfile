@@ -1,4 +1,4 @@
- FROM registry.tjoomla.com:5000/mezzaninedocker_web:v3
+ FROM registry.tjoomla.com:5000/mezzaninedocker_web:v4
 # FROM kakadadroid/python-talib
 
  ENV PYTHONUNBUFFERED 1
