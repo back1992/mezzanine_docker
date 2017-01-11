@@ -9,5 +9,6 @@
        - .:/code
      ports:
        - "8866:8000"
+       - "6800:6800"
      depends_on:
        - db

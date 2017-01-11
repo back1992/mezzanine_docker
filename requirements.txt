@@ -8,3 +8,4 @@ psycopg2
 scrapy
 Cython
 twisted
+TA-LIB
