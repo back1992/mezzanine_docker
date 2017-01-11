@@ -12,7 +12,7 @@ class PositionSpider(scrapy.Spider):
 
     custom_settings = {
         'ITEM_PIPELINES': {
-            'mykgb.pipelines.PositionListPipeline': 100,
+            'mykgb.pipelines.PositionPipeline': 100,
         },
     }
 
@@ -31,35 +31,6 @@ class PositionSpider(scrapy.Spider):
                 url = 'http://data.futures.hexun.com/cccj.aspx?sBreed=' + p.sbreed + '&sContract=' + p.maincontract + '&sDate=' + date + '&sRank=2000'
                 yield scrapy.Request(url, meta={'code': p.codeen, 'date': date, 'url': url},
                                      callback=self.parsePage)
-
-    # print(date['date__max'])
-    # for p in qs:
-    #     url = 'http://data.futures.hexun.com/cccj.aspx?sBreed=' + p.sbreed + '&sContract=' + p.maincontract + '&sDate=' + date + '&sRank=2000'
-    #     yield scrapy.Request(url, meta={'code': p.codeen, 'date': date, 'url': url},
-    #                              callback=self.parsePage)
-    # def parse(self, response):
-    #     # date = Price.objects.aggregate(Max('date'))
-    #     # print(date['date__max'])
-    #     date = datetime.datetime.today().strftime('%Y-%m-%d')
-    #     qs = Codeset.objects.filter(actived=True)
-    #     for p in qs:
-    #         url = 'http://data.futures.hexun.com/cccj.aspx?sBreed=' + p.sbreed + '&sContract=' + p.maincontract + '&sDate=' + date + '&sRank=2000'
-    #         yield scrapy.Request(url, meta={'code': p.codeen, 'date': date, 'url': url},
-    #                              callback=self.parsePage)
-
-    #
-    #
-    # def parse(self, response):
-    #     Position.objects.all().delete()
-    #     qs = Codeset.objects.filter(actived=True)
-    #     dates_in_db = Price.objects.values('date').order_by('-date').distinct()[:60]
-    #     # print(dates_in_db)
-    #     for p in qs:
-    #         for date_in_db in dates_in_db:
-    #             date = date_in_db['date'].strftime('%Y-%m-%d')
-    #             url = 'http://data.futures.hexun.com/cccj.aspx?sBreed=' + p.sbreed + '&sContract=' + p.maincontract + '&sDate=' + date + '&sRank=2000'
-    #             yield scrapy.Request(url, meta={'code': p.codeen, 'date': date, 'url': url},
-    #                                  callback=self.parsePage)
 
     def parsePage(self, response):
         tables = response.xpath('//table[@class="dou_table"]')

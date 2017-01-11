@@ -1,4 +1,4 @@
-Mezzanine==4.2.2
+Mezzanine
 psycopg2
 django-tinymce
 django_pandas
@@ -7,3 +7,4 @@ quandl
 psycopg2
 scrapy
 Cython
+twisted

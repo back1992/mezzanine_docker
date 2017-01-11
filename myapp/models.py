@@ -20,13 +20,13 @@ class Codeset(models.Model):
 
 
 class Quandlset(models.Model):
-    ticker = models.CharField(max_length=20)
-    source = models.CharField(max_length=20, default="CHRIS")
-    exchange = models.CharField(max_length=10)
-    name = models.CharField(max_length=20)
-    namezh = models.CharField(max_length=20, null=True)
-    months = models.CharField(max_length=20, null=True)
-    quandlcode = models.CharField(max_length=20)
+    ticker = models.CharField(max_length=100)
+    source = models.CharField(max_length=100, default="CHRIS")
+    exchange = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
+    namezh = models.CharField(max_length=100, null=True)
+    months = models.CharField(max_length=100, null=True)
+    quandlcode = models.CharField(max_length=100)
     depth = models.PositiveIntegerField(default=1)
     actived = models.BooleanField(default=True)
     pub_date = models.DateTimeField(default=timezone.now)

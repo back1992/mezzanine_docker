@@ -47,31 +47,28 @@ class WholeTradersSpider(scrapy.Spider):
                 signal['code'] = code.codezh
                 signal['contract'] = code.maincontract
                 df_signal = df_signal.append(signal, ignore_index=True)
-        print(df_signal)
-        # df_signal['vi'] = df_signal['interest'] + 3 * df_signal['var']
-
-        # df_signal_buy = df_signal[df_signal['vi'] > 0].sort_values(by=['vi'], ascending=[0])
-        # df_signal_sell = df_signal[df_signal['vi'] < 0].sort_values(by=['vi'], ascending=[1])
+        # df_signal_buy = df_signal[df_signal['var'] > 0][df_signal['interest'] > 0][
+        #     df_signal['trade_var'] > 0].sort_values(by=['var'], ascending=[0])
+        # df_signal_sell = df_signal[df_signal['var'] < 0][df_signal['interest'] < 0][
+        #     df_signal['trade_var'] > 0].sort_values(by=['var'], ascending=[1])
         df_signal_buy = df_signal[df_signal['var'] > 0][df_signal['interest'] > 0][
             df_signal['volume_var'] > 0].sort_values(by=['var'], ascending=[0])
         df_signal_sell = df_signal[df_signal['var'] < 0][df_signal['interest'] < 0][
             df_signal['volume_var'] > 0].sort_values(by=['var'], ascending=[1])
-        print(self.send_signal_buy(df_signal_buy))
-        print(self.send_signal_sell(df_signal_sell))
-        # sm(u"new 今日做多合约品种 " + date.strftime('%Y-%m-%d'), self.send_signal_buy(df_signal_buy))
-        # sm(u"new 今日做空合约品种 " + date.strftime('%Y-%m-%d'), self.send_signal_sell(df_signal_sell))
-        sm("23 ", '123')
-        sm("45 ", '456')
+        sm(u"今日做多合约品种  ", self.send_signal_buy(df_signal_buy))
+        sm(u"今日做空合约品种 ", self.send_signal_sell(df_signal_sell))
 
     def get_signal_df(self, df):
         strength_interest = 0
         strength_var = 0
         volume_var = 0
+        trade_var = 0
         for num in self.track_list:
             hold_total_sum = df[:num]['hold_total'].sum()
             strength_interest += df[:num]['hold_interest'].sum() * 100 / hold_total_sum
             strength_var += df[:num]['hold_var'].sum() * 1000 / hold_total_sum
             volume_var += df[:num]['volume_var'].sum()
+            trade_var += df[:num]['tradevar'].sum()
         name_list = ''
         for index, row in df[:2].iterrows():
             name_list += row['name'] + ' t' + str(row['tradeno']) + ' b:' + str(row['buyno']) + ' s:' + str(
@@ -92,13 +89,13 @@ class WholeTradersSpider(scrapy.Spider):
             action_signal, created = Signal.objects.update_or_create(code=Codeset.objects.get(codezh=row['code']))
             action_signal.trade = row['var']
             action_signal.save()
-        # return signal
-        return re.sub('<[^<]+?>', '', signal)
+        return signal
+        # return re.sub('<[^<]+?>', '', signal)
 
     def send_signal_sell(self, df):
         signal = ''
         for index, row in df.iterrows():
-            if row['volume_var'] < 0:
+            if row['volume_var'] > 0:
                 signal += u'<h3 STYLE="color:green;">做空 ' + row['code'] + '-' + row['contract'] + '</h3>'
             else:
                 signal += u'<h3>做空 ' + row['code'] + '-' + row['contract'] + '</h3>'
@@ -109,5 +106,5 @@ class WholeTradersSpider(scrapy.Spider):
             action_signal, created = Signal.objects.update_or_create(code=Codeset.objects.get(codezh=row['code']))
             action_signal.trade = row['var']
             action_signal.save()
-        # return signal
-        return re.sub('<[^<]+?>', '', signal)
+        return signal
+        # return re.sub('<[^<]+?>', '', signal)

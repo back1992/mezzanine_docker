@@ -9,16 +9,14 @@ def sm(title, body, *args):
     sender = '13261871395@163.com'  # 设置发件邮箱，一定要自己注册的邮箱
     pwd = 'Joomla8'  # 设置发件邮箱的密码，等会登陆会用到
 
-    # msg = MIMEText(body, 'html')
-    msg = MIMEText(body, _subtype='html', _charset='utf8')
+    msg = MIMEText(body, 'html')
+    # msg = MIMEText(body, _subtype='html', _charset='utf8')
     msg['subject'] = title
     msg['from'] = sender
     msg['to'] = "linmukong@iCloud.com"
     receiver = args
     if not receiver:
         receiver = '13261871395@163.com'
-
-    print(msg.as_string())
 
     s = smtplib.SMTP(host, port)
     s.login(sender, pwd)
